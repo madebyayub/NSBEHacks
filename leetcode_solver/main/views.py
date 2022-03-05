@@ -20,7 +20,7 @@ def problem(request, id):
 
     # User requests the home page
     if request.method == 'GET':
-        return TemplateResponse(request, 'main/index.html', context={"youtube_link": id, "title": id})
+        return TemplateResponse(request, 'main/index.html', context={"youtube_link": id, "id": id})
 
     elif request.method == 'POST':
         
