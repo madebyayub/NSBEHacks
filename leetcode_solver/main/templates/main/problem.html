@@ -1,0 +1,46 @@
+{% extends "main/base.html"%}
+{% load static %}
+{% block index %}
+
+<div class="problem-container container-fluid">   
+    <div class="title-container">
+        <h2 class="problem-title">Leetcode Problem {{ id }}: {{ title }}</h2>
+        <div class="categories-container">
+            {% for cat in categories %}
+                <span class="badge badge-pill badge-info mr-2">{{ cat }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+    <div class="video-demonstrations-container row mt-5 py-5">
+        <div class="showcased-video col-10">
+            {% with videos|first as showcasedVideo %}
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src={{ showcasedVideo.src }}></iframe>
+            </div>
+            <h2 class="mt-4">{{ showcasedVideo.title }}</h2>
+            {% endwith %}
+        </div>
+        <div class="related-videos-container col-2">
+            <h3>More related videos</h4>
+            {% with relatedVideos=videos|slice:"1:" %}
+            {% for vid in relatedVideos %}
+                <div class="related-video p-3">
+                    <p class="h6">{{ vid.title }}</p>
+                    <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8eW91dHViZSUyMHRodW1ibmFpbHxlbnwwfHwwfHw%3D&w=1000&q=80" class="img-thumbnail">
+                </div>
+            {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+    <div class="category-explanations-container">
+        {% for cat in categories %}
+        <div class="category-container">
+            <h2 class="problem-title deep-dive">{{ cat }} Deep Dives</h2>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock index %}
