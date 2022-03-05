@@ -3,5 +3,5 @@ from main.views import index, problem
 
 urlpatterns = [
     path('', index),
-    path('<int:id>/', problem)
+    path('problem/<int:id>/', problem),
 ]
