@@ -1,0 +1,97 @@
+@charset "utf-8";
+
+/* Primary Font - Roboto | Accent Font - Playfair Display*/
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Roboto:wght@400;500&display=swap');
+
+/* Color variables from style guide */
+:root {
+  --clr-primary: #c1121f;
+  --clr-primary-var: #780000;
+
+  --clr-secondary: #003049;
+  --clr-accent: #669bbc;
+
+  --clr-error: #cf6679;
+
+  --clr-background: #fff;
+
+  --clr-text-color : #121212;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  min-height: 0;
+  min-width: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  max-width: 100%;
+  background-color: var(--clr-background);
+  font-size: 80.5%;
+}
+
+/* Default font size & weights */
+
+h1 {
+  font-family: "Playfair Display", "serif";
+  font-weight: 500;
+  font-size: 4em;
+  opacity: 100%;
+  padding-bottom: 5px;
+  color: var(--clr-text-color);
+}
+
+h2 {
+  font-family: "Roboto", "sans-serif";
+  font-weight: 400;
+  font-size: 3em;
+  opacity: 87%;
+  color: var(--clr-text-color);
+}
+
+h3 {
+  font-family: "Roboto", "sans-serif";
+  font-weight: 400;
+  font-size: 2.33em;
+  opacity: 79%;
+  padding-bottom: 5px;
+  color: var(--clr-text-color);
+}
+
+h4 {
+  font-family: "Roboto", "sans-serif";
+  font-weight: 400;
+  font-size: 1rem;
+  opacity: 60%;
+  color: var(--clr-text-color);
+}
+
+p {
+  font-family: "Roboto", "sans-serif";
+  font-weight: 400;
+  font-size: 1.33em;
+  opacity: 60%;
+  line-height: 2.08em;
+  color: var(--clr-text-color);
+}
+
+p.thick {
+  font-family: "Roboto", "sans-serif";
+  font-weight: 500;
+  font-size: 1.33em;
+  opacity: 87%;
+  color: var(--clr-text-color);
+}
