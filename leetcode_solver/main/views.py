@@ -9,6 +9,8 @@ import requests
 import json
 import googleapiclient.discovery
 from django.conf import settings
+from django.shortcuts import redirect
+
 
 # YouTube API key
 DEVELOPER_KEY = settings.GOOGLE_API_KEY
@@ -20,7 +22,11 @@ def index(request):
         return TemplateResponse(request, 'main/index.html', context={"example": "-- some data --", "example2": "-- some other data --"})
 
     elif request.method == 'POST':
-        pass
+        input_data = request.POST.get('search', False)
+        if not input_data:
+            return TemplateResponse(request, 'main/index.html', context={"example": "Error!"})
+
+        return redirect(f'/problem/{input_data}')
 
 
 def problem(request, id):

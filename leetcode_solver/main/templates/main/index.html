@@ -6,18 +6,28 @@
 
 <div class="search-container">
     <h1>Explore a Leetcode Question!</h1>
-    
-    <label>
-        <input type="text" required>
-        <ul>
-        <li s>s</li>
-        <li e>e</li>
-        <li a>a</li>
-        <li r>r</li>
-        <li c>c</li>
-        <li h>h</li>
-        </ul>
-    </label>
+    <div class = "search-buttons"> 
+        <div class="button-container">
+            <button type="button" class="navbar-button btn btn-outline-dark btn-lg random">Randomize</button>
+        </div>
+        <form class="container" action="{% url 'main:index' %}" method="POST">
+            {% csrf_token %}
+            <label>
+                <input type="number" name="search" required >
+                <input type="submit" hidden />
+                <ul>
+                <li s>s</li>
+                <li e>e</li>
+                <li a>a</li>
+                <li r>r</li>
+                <li c>c</li>
+                <li h>h</li>
+                </ul>
+            </label>
+        </form>
+    </div>
+
+
 </div>
 
 {% endblock index %}
