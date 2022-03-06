@@ -33,53 +33,51 @@ def problem(request, id):
 
     # Queries.objects.all().delete()
     failed = False
-    
+
     # Check if we already have this question's data
     try:
         result = Queries.objects.get(question_id=int(id))
-        context={"id": result.question_id,
-                "title": result.title,
-                "url": result.question_url_slug,
-                "categories": json.loads(result.topics),
-                "difficulty": int(result.difficulty),
-                "content": result.content,
-                "videos": json.loads(result.videos),
-                "relatedQuestions": json.loads(result.similar_questions)[:4]}
+        context = {"id": result.question_id,
+                   "title": result.title,
+                   "url": result.question_url_slug,
+                   "categories": json.loads(result.topics),
+                   "difficulty": int(result.difficulty),
+                   "content": result.content,
+                   "videos": json.loads(result.videos),
+                   "relatedQuestions": json.loads(result.similar_questions)[:4]}
 
         return TemplateResponse(request, 'main/problem.html', context)
 
     except ValueError:
         try:
             result = Queries.objects.get(question_url_slug=id)
-            context={"id": result.question_id,
-                    "url": result.question_url_slug,
-                    "title": result.title,
-                    "categories": json.loads(result.topics),
-                    "difficulty": int(result.difficulty),
-                    "content": result.content,
-                    "videos": json.loads(result.videos),
-                    "relatedQuestions": json.loads(result.similar_questions)[:4]}
+            context = {"id": result.question_id,
+                       "url": result.question_url_slug,
+                       "title": result.title,
+                       "categories": json.loads(result.topics),
+                       "difficulty": int(result.difficulty),
+                       "content": result.content,
+                       "videos": json.loads(result.videos),
+                       "relatedQuestions": json.loads(result.similar_questions)[:4]}
 
             return TemplateResponse(request, 'main/problem.html', context)
         except Queries.DoesNotExist:
             failed = True
     except Queries.DoesNotExist:
         failed = True
-    
+
     if failed:
         # If we don't have this question's data
-
         resp = requests.get('https://leetcode.com/api/problems/all/')
         questions = json.loads(resp.content)
-
         for question in questions['stat_status_pairs']:
 
-            if id == question['stat']['question_id'] or id == question['stat']['question__article__slug']:
+            if id == str(question['stat']['question_id']) or id == question['stat']['question__article__slug']:
 
                 paid_only = question['paid_only']
 
                 if not paid_only:
-                    
+                    print(paid_only)
                     print("--- Getting API Data ---")
 
                     # Get basic question data
@@ -93,6 +91,7 @@ def problem(request, id):
                         'https://leetcode.com/graphql', json=data).json()
 
                     try:
+                        print(resp)
                         content = resp['data']['question']['content']
                         similar_questions = resp['data']['question']['similarQuestions']
                         topics = resp['data']['question']['topicTags']
@@ -130,21 +129,21 @@ def problem(request, id):
                             item['id']['videoId']
                         thumbnail = item['snippet']['thumbnails']['high']['url']
                         videos.append({"video_title": video_title, 'video_desc': video_description,
-                                    "channel_title": channel_title, "channel_url": channel_url, 'video_url': video_url, 'thumbnail': thumbnail})
+                                       "channel_title": channel_title, "channel_url": channel_url, 'video_url': video_url, 'thumbnail': thumbnail})
 
-
-                    q = Queries(question_id=question['stat']['question_id'], question_url_slug=question_url_slug, difficulty=difficulty, content=content, similar_questions = similar_questions, topics = json.dumps(topics), videos = json.dumps(videos), title = question_title)
+                    q = Queries(question_id=question['stat']['question_id'], question_url_slug=question_url_slug, difficulty=difficulty,
+                                content=content, similar_questions=similar_questions, topics=json.dumps(topics), videos=json.dumps(videos), title=question_title)
                     q.save()
 
                     return TemplateResponse(request, 'main/problem.html',
                                             context={"id": question['stat']['question_id'],
-                                                    "url": question_url_slug,
-                                                    "title": question_title,
-                                                    "categories": topics,
-                                                    "difficulty": difficulty,
-                                                    "content": content,
-                                                    "videos": videos,
-                                                    "relatedQuestions": json.loads(similar_questions)[:4]})
+                                                     "url": question_url_slug,
+                                                     "title": question_title,
+                                                     "categories": topics,
+                                                     "difficulty": difficulty,
+                                                     "content": content,
+                                                     "videos": videos,
+                                                     "relatedQuestions": json.loads(similar_questions)[:4]})
                 else:
                     # Handle Premium Question
                     return TemplateResponse(request, 'main/error.html')
