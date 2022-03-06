@@ -1,0 +1,14 @@
+{% extends "main/base.html"%}
+{% load static %}
+{% block index %}
+
+<div class="error-container">
+    <div class="error-message">
+        <h1>Error!</h1>
+        <h2>This problem is premium-only or does not have enough data...</h2>
+        <a href="/"><button type="button" class="navbar-button btn btn-outline-dark btn-lg">Try Again</button></a>
+            
+    </div>
+</div>
+
+{% endblock index %}
