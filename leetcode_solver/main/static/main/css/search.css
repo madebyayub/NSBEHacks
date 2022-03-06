@@ -15,10 +15,23 @@
 
 .random{
   padding: 12px;
+  margin-right: 12px;
+  min-width: fit-content;
+}
+
+@media (max-width: 1000px){
+  .random{
+    font-size: 1.2em;
+  }
+}
+
+label{
+  width: 100%;
 }
 
 form{
   margin: 0!important;
+
 }
 
 .search-container {

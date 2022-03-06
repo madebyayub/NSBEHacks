@@ -3,12 +3,13 @@
 {% block index %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'main/css/search.css' %}" />
+<script src="{% static 'main/js/main.js' %}"></script>
 
 <div class="search-container">
     <h1>Explore a Leetcode Question!</h1>
     <div class = "search-buttons"> 
         <div class="button-container">
-            <button type="button" class="navbar-button btn btn-outline-dark btn-lg random">Randomize</button>
+            <a id="random" href=""><button type="button" class="navbar-button btn btn-outline-dark btn-lg random">Randomize</button></a>
         </div>
         <form class="container" action="{% url 'main:index' %}" method="POST">
             {% csrf_token %}
