@@ -71,10 +71,13 @@ def problem(request, id):
                     resp = requests.post(
                         'https://leetcode.com/graphql', json=data).json()
 
-                    content = resp['data']['question']['content']
-                    similar_questions = resp['data']['question']['similarQuestions']
-                    topics = resp['data']['question']['topicTags']
-                    stats = resp['data']['question']['stats']
+                    try:
+                        content = resp['data']['question']['content']
+                        similar_questions = resp['data']['question']['similarQuestions']
+                        topics = resp['data']['question']['topicTags']
+                        stats = resp['data']['question']['stats']
+                    except KeyError:
+                        pass
 
                     # Get YouTube API Data
                     SEARCH_QUERY = question_title + \
