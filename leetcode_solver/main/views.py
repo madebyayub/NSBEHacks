@@ -76,8 +76,8 @@ def problem(request, id):
                         similar_questions = resp['data']['question']['similarQuestions']
                         topics = resp['data']['question']['topicTags']
                         stats = resp['data']['question']['stats']
-                    except KeyError:
-                        pass
+                    except:
+                        return TemplateResponse(request, 'main/error.html')
 
                     # Get YouTube API Data
                     SEARCH_QUERY = question_title + \
@@ -125,8 +125,6 @@ def problem(request, id):
                                                     "videos": videos})
                 else:
                     # Handle Premium Question
-                    # TODO: Offer another question up instead.
-                    return HttpResponse('<h1>Premium Only!</h1>')
-
-        # TODO: Handle when the user puts in bad data as the id, or id is not a leetcode question
-        return TemplateResponse(request, 'main/index.html', context={"youtube_link": id, "id": id})
+                    return TemplateResponse(request, 'main/error.html')
+                    
+        return TemplateResponse(request, 'main/error.html')
