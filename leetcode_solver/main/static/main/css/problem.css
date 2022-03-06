@@ -20,11 +20,6 @@
   width: 100%;
 }
 
-.sidebar {
-  width: 25%;
-  background-color: #161616;
-}
-
 .problem-title {
   margin: 16px 0;
   font-weight: 600;
@@ -67,4 +62,48 @@
 .showcased-video,
 .related-videos-container {
   height: 80vh;
+}
+
+.related-video {
+  transition: 0.2s all ease-in-out;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.related-video:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.video-title-attempt-btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Sidebar tabs */
+
+.sidebar {
+  width: 25%;
+  background-color: #161616;
+  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar h2 {
+  color: #fafafa;
+}
+
+.sidebar button {
+  color: #fafafa;
+  font-weight: 600;
+  display: block;
+  background: transparent;
+  width: 100%;
+  border-radius: 0;
+}
+
+.sidebar .card {
+  font-weight: 600;
+  border-radius: 0;
+  font-size: medium;
+  line-height: 25px;
+  border-top: none;
 }
