@@ -2,6 +2,7 @@ import imp
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.response import TemplateResponse
+from django.shortcuts import redirect
 import requests
 import json
 import googleapiclient.discovery
@@ -17,7 +18,6 @@ def index(request):
         return TemplateResponse(request, 'main/index.html', context={"example": "-- some data --", "example2": "-- some other data --"})
 
     elif request.method == 'POST':
-
         pass
 
 
