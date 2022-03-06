@@ -32,20 +32,41 @@ def index(request):
 def problem(request, id):
 
     # Queries.objects.all().delete()
+    failed = False
     
     # Check if we already have this question's data
     try:
-        result = Queries.objects.get(question_id=id)
+        result = Queries.objects.get(question_id=int(id))
         context={"id": result.question_id,
                 "title": result.title,
+                "url": result.question_url_slug,
                 "categories": json.loads(result.topics),
                 "difficulty": int(result.difficulty),
                 "content": result.content,
-                "videos": json.loads(result.videos)}
+                "videos": json.loads(result.videos),
+                "relatedQuestions": json.loads(result.similar_questions)[:4]}
 
         return TemplateResponse(request, 'main/problem.html', context)
 
+    except ValueError:
+        try:
+            result = Queries.objects.get(question_url_slug=id)
+            context={"id": result.question_id,
+                    "url": result.question_url_slug,
+                    "title": result.title,
+                    "categories": json.loads(result.topics),
+                    "difficulty": int(result.difficulty),
+                    "content": result.content,
+                    "videos": json.loads(result.videos),
+                    "relatedQuestions": json.loads(result.similar_questions)[:4]}
+
+            return TemplateResponse(request, 'main/problem.html', context)
+        except Queries.DoesNotExist:
+            failed = True
     except Queries.DoesNotExist:
+        failed = True
+    
+    if failed:
         # If we don't have this question's data
 
         resp = requests.get('https://leetcode.com/api/problems/all/')
@@ -53,7 +74,7 @@ def problem(request, id):
 
         for question in questions['stat_status_pairs']:
 
-            if id == question['stat']['question_id']:
+            if id == question['stat']['question_id'] or id == question['stat']['question__article__slug']:
 
                 paid_only = question['paid_only']
 
@@ -75,7 +96,6 @@ def problem(request, id):
                         content = resp['data']['question']['content']
                         similar_questions = resp['data']['question']['similarQuestions']
                         topics = resp['data']['question']['topicTags']
-                        stats = resp['data']['question']['stats']
                     except:
                         return TemplateResponse(request, 'main/error.html')
 
@@ -113,18 +133,20 @@ def problem(request, id):
                                     "channel_title": channel_title, "channel_url": channel_url, 'video_url': video_url, 'thumbnail': thumbnail})
 
 
-                    q = Queries(question_id=id, question_url_slug=question_url_slug, difficulty=difficulty, content=content, similar_questions = similar_questions, topics = json.dumps(topics), videos = json.dumps(videos), title = question_title)
+                    q = Queries(question_id=question['stat']['question_id'], question_url_slug=question_url_slug, difficulty=difficulty, content=content, similar_questions = similar_questions, topics = json.dumps(topics), videos = json.dumps(videos), title = question_title)
                     q.save()
 
                     return TemplateResponse(request, 'main/problem.html',
-                                            context={"id": id,
+                                            context={"id": question['stat']['question_id'],
+                                                    "url": question_url_slug,
                                                     "title": question_title,
                                                     "categories": topics,
                                                     "difficulty": difficulty,
                                                     "content": content,
-                                                    "videos": videos})
+                                                    "videos": videos,
+                                                    "relatedQuestions": json.loads(similar_questions)[:4]})
                 else:
                     # Handle Premium Question
                     return TemplateResponse(request, 'main/error.html')
-                    
+
         return TemplateResponse(request, 'main/error.html')

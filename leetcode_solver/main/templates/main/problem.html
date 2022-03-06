@@ -43,10 +43,26 @@
                 </div>
                 <div class="video-title-attempt-btn-container">
                     <h2 class="mt-4">{{ showcasedVideo.video_title }}</h2>
-                    <button type="button" class="navbar-button btn btn-dark btn-md mt-3 px-5">Ready To Attempt</button>
+                    <button type="button" class="navbar-button btn btn-dark btn-md mt-3 px-5"><a style="color:#fff" href="https://leetcode.com/problems/{{ url }}/">Ready To Attempt</a></button>
                 </div>
+                <hr>
                 <div class="description-container">
-                    Description 
+                    <div class="row">
+                    <h2 class="mt-4 ml-4 w-100"> Related Questions </h2>
+                    {% for question in relatedQuestions %}
+                        <div class="col-sm-6 mt-3">
+                            <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ question.title }}</h5>
+                                {% if question.difficulty == "Easy" %}<span class="easy-tag" style="font-size: 1.2rem;">Easy</span><br>
+                                {% elif question.difficulty == "Medium" %}<span class="medium-tag" style="font-size: 1.2rem;">Medium</span><br>
+                                {% else %}<span class="hard-tag" style="font-size: 1.2rem;">Hard</span><br>{% endif %}<br>
+                                <a href="/problem/{{ question.titleSlug }}" class="navbar-button btn btn-dark btn-md mt-0">Try It</a>
+                            </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
                 </div>
                 {% endwith %}
             </div>
@@ -54,10 +70,12 @@
                 <h3>More related videos</h4>
                 {% with relatedVideos=videos|slice:"1:" %}
                 {% for vid in relatedVideos %}
-                    <div class="related-video p-3">
-                        <p class="h6">{{ vid.video_title }}</p>
-                        <img src={{ vid.thumbnail }} class="img-thumbnail">
-                    </div>
+                    <a href="{{vid.video_url}}">
+                        <div class="related-video p-3">
+                            <p class="h6">{{ vid.video_title }}</p>
+                            <img src={{ vid.thumbnail }} class="img-thumbnail">
+                        </div>
+                    </a>
                 {% endfor %}
                 {% endwith %}
             </div>

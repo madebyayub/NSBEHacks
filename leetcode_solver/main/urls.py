@@ -5,5 +5,5 @@ app_name = 'main'
 
 urlpatterns = [
     path('', index, name='index'),
-    path('problem/<int:id>/', problem, name='problem'),
+    path('problem/<str:id>/', problem, name='problem'),
 ]
