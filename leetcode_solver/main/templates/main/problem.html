@@ -4,53 +4,51 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'main/css/problem.css' %}" />
 
-<div class="problem-container container-fluid">   
-    <div class="title-container">
-        <h2 class="problem-title">Leetcode Problem #{{ id }}: {{ title }}</h2>
-        <div class="categories-container">
-            {% for cat in categories %}
-                <span class="badge badge-pill badge-info mr-2">{{ cat.name }}</span>
-            {% endfor %}
-        </div>
-        <h5 class="mt-4">
-            Difficulty Level: 
-            {% if difficulty == 1 %}<span class="easy-tag">Easy</span>
-            {% elif difficulty == 2 %}<span class="medium-tag">Medium</span>
-            {% else %}<span class="hard-tag">Hard</span>{% endif %}
-        </h5>
+<div class="problem-view-container">
+    <div class="sidebar">
+        {{ array }}
     </div>
-    <hr>
-    <div class="video-demonstrations-container row mt-5 py-5">
-        <div class="showcased-video col-9">
-            {% with videos|first as showcasedVideo %}
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src={{ showcasedVideo.video_url }}></iframe>
+
+    <div class="problem-container container-fluid">   
+        <div class="title-container">
+            <h2 class="problem-title">Leetcode Problem #{{ id }}: {{ title }}</h2>
+            <div class="categories-container">
+                {% for cat in categories %}
+                    <span class="badge badge-pill badge-info mr-2">{{ cat.name }}</span>
+                {% endfor %}
             </div>
-            <h2 class="mt-4">{{ showcasedVideo.video_title }}</h2>
-            <div class="description-container">
-                 Description 
-            </div>
-            {% endwith %}
+            <h5 class="mt-4">
+                Difficulty Level: 
+                {% if difficulty == 1 %}<span class="easy-tag">Easy</span>
+                {% elif difficulty == 2 %}<span class="medium-tag">Medium</span>
+                {% else %}<span class="hard-tag">Hard</span>{% endif %}
+            </h5>
         </div>
-        <div class="related-videos-container col-3">
-            <h3>More related videos</h4>
-            {% with relatedVideos=videos|slice:"1:" %}
-            {% for vid in relatedVideos %}
-                <div class="related-video p-3">
-                    <p class="h6">{{ vid.video_title }}</p>
-                    <img src={{ vid.thumbnail }} class="img-thumbnail">
+        <hr>
+        <div class="video-demonstrations-container row mt-1 py-1">
+            <div class="showcased-video col-9">
+                {% with videos|first as showcasedVideo %}
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src={{ showcasedVideo.video_url }}></iframe>
                 </div>
-            {% endfor %}
-            {% endwith %}
+                <h2 class="mt-4">{{ showcasedVideo.video_title }}</h2>
+                <div class="description-container">
+                    Description 
+                </div>
+                {% endwith %}
+            </div>
+            <div class="related-videos-container col-3">
+                <h3>More related videos</h4>
+                {% with relatedVideos=videos|slice:"1:" %}
+                {% for vid in relatedVideos %}
+                    <div class="related-video p-3">
+                        <p class="h6">{{ vid.video_title }}</p>
+                        <img src={{ vid.thumbnail }} class="img-thumbnail">
+                    </div>
+                {% endfor %}
+                {% endwith %}
+            </div>
         </div>
-    </div>
-    <div class="category-explanations-container">
-        <h2>Deep Dives.</h2>
-        {% for cat in categories %}
-        <div class="category-container">
-            <h2 class="problem-title deep-dive">{{ cat.name }} Deep Dives</h2>
-        </div>
-        {% endfor %} 
     </div>
 </div>
 
