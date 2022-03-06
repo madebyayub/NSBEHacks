@@ -59,11 +59,6 @@
   background-color: black;
 }
 
-.showcased-video,
-.related-videos-container {
-  height: 80vh;
-}
-
 .related-video {
   transition: 0.2s all ease-in-out;
   border-radius: 6px;

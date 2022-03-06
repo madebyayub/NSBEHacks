@@ -12,7 +12,43 @@
                 <button type="button" class="btn btn-light btn-lg mt-3" data-toggle="collapse" data-target="#{{cat.slug}}" aria-expanded="false" aria-controls="{{cat.slug}}">{{cat.name}}</button>
                 <div id="{{cat.slug}}" class="collapse">
                     <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                      {% if cat.name == "Array" %}
+                        <p>
+                        An array is a container object that holds a fixed number of values of a single type. The length of an array is established when the array is created. After creation, its length is fixed. You have seen an example of arrays already, in the main method of the "Hello World!" application. This section discusses arrays in greater detail.
+
+                        Illustration of an array as 10 boxes numbered 0 through 9; an index of 0 indicates the first element in the array
+                        An array of 10 elements.
+                        
+                    
+                        Each item in an array is called an element, and each element is accessed by its numerical index. As shown in the preceding illustration, numbering begins with 0. The 9th element, for example, would therefore be accessed at index 8.
+                        </p>
+                        {% elif cat.name == "Hash Table" %}
+                        <p>
+                            Hash Table is a data structure which stores data in an associative manner. In a hash table, data is stored in an array format, where each data value has its own unique index value. Access of data becomes very fast if we know the index of the desired data.
+
+Thus, it becomes a data structure in which insertion and search operations are very fast irrespective of the size of the data. Hash Table uses an array as a storage medium and uses hash technique to generate an index where an element is to be inserted or is to be located from.
+                        </p>
+                        {% elif cat.name == "Sliding Window" %}
+                        <p>
+                            Window Sliding Technique
+
+        The technique can be best understood with the window pane in bus, consider a window of length n and the pane which is fixed in it of length k. Consider, initially the pane is at extreme left i.e., at 0 units from the left. Now, co-relate the window with array arr[] of size n and pane with current_sum of size k elements. Now, if we apply force on the window such that it moves a unit distance ahead. The pane will cover next k consecutive elements. 
+        Consider an array arr[] = {5, 2, -1, 0, 3} and value of k = 3 and n = 5
+        Applying sliding window technique : 
+
+        1. We compute the sum of first k elements out of n terms using a linear loop and store the sum in variable window_sum.
+        2. Then we will graze linearly over the array till it reaches the end and simultaneously keep track of maximum sum.
+        3. To get the current sum of block of k elements just subtract the first element from the previous block and add the last element of the current block.
+                        </p>
+                        {% elif cat.name == "String" %}
+                        <p>
+                            A string is a sequence of characters. In other words, a string is an array of character data type. An instance of a string is called a string literal. For instance in C++: string s = "HackerEarth";  is a string literal.
+
+String Manipulation is a class of problems where a user is asked to process a given string and use/change its data. 
+                        </p>
+                        {% else %}
+                        <p> Content coming soon.</p>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
@@ -82,9 +118,5 @@
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 {% endblock index %}
