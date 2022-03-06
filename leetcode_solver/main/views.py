@@ -63,7 +63,7 @@ def problem(request, id):
                     q=SEARCH_QUERY,
                     videoDuration='short',
                     videoDefinition='high',
-                    maxResults=4
+                    maxResults=15
                 )
 
                 response = api_request.execute()
@@ -75,28 +75,20 @@ def problem(request, id):
                     channel_title = item['snippet']['channelTitle']
                     channel_url = 'https://www.youtube.com/channel/' + \
                         item['snippet']['channelId']
-                    video_url = 'https://www.youtube.com/watch?v=' + \
+                    video_url = 'https://www.youtube.com/embed/' + \
                         item['id']['videoId']
+                    thumbnail = item['snippet']['thumbnails']['high']['url']
                     videos.append({"video_title": video_title, 'video_desc': video_description,
-                                  "channel_title": channel_title, "channel_url": channel_url, 'video_url': video_url})
-
-                output = {"question_url_slug": question_url_slug, "difficulty": difficulty, "question_title": question_title,
-                          "content": content, "similar_questions": similar_questions, "topics": topics, "stats": stats, 'videos': videos}
+                                  "channel_title": channel_title, "channel_url": channel_url, 'video_url': video_url, 'thumbnail': thumbnail})
 
                 # TODO: Return the successfull template response
                 return TemplateResponse(request, 'main/problem.html',
                                         context={"id": id,
-                                                 "title": "Two Sum",
-                                                 "categories": ["Array", "Linked List"],
-                                                 "videos": [
-                                                     {"title": "Building the Django Base HTML Template (Django Tutorial) | Part 13",
-                                                      "src": "https://www.youtube.com/embed/LjjujVxI0js"},
-                                                     {"title": "Building the Django Base HTML Template (Django Tutorial) | Part 13",
-                                                      "src": "https://www.youtube.com/embed/LjjujVxI0js"},
-                                                     {"title": "Building the Django Base HTML Template (Django Tutorial) | Part 13",
-                                                      "src": "https://www.youtube.com/embed/LjjujVxI0js"},
-                                                     {"title": "Building the Django Base HTML Template (Django Tutorial) | Part 13",
-                                                      "src": "https://www.youtube.com/embed/LjjujVxI0js"}]})
+                                                 "title": question_title,
+                                                 "categories": topics,
+                                                 "difficulty": difficulty,
+                                                 "content": content,
+                                                 "videos": videos})
             else:
                 # Handle Premium Question
                 # TODO: Offer another question up instead.
